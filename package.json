@@ -40,7 +40,6 @@
     "express": "^5.1.0",
     "express-jwt": "^8.5.1",
     "firebase": "^12.1.0",
-    "firebase-tools": "^14.12.0",
     "jsonwebtoken": "^9.0.2",
     "mongoose": "^8.15.0",
     "socket.io": "^4.8.1",
