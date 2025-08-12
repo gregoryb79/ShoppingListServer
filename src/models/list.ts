@@ -17,7 +17,11 @@ const ShoppingListSchema = new Schema(
           type: Number,
           default: 1,
           required: true
-        }
+        },
+        bought: {
+          type: Boolean,
+          default: false
+        }        
       }
     ]   
   },
