@@ -15,11 +15,6 @@ const UserSchema = new Schema(
         },
         avatar: {
             type: String
-        },
-        familyId: {
-            type: Schema.Types.ObjectId,
-            ref: 'FamilyAccount',
-            required: true
         }
     },
     { timestamps: true }

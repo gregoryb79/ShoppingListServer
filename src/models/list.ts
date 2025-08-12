@@ -8,16 +8,18 @@ const ShoppingListSchema = new Schema(
     },
     items: [
       {
-        type: Schema.Types.ObjectId,
-        ref: 'Item',
-        required: true
+        item: {
+          type: Schema.Types.ObjectId,
+          ref: 'Item',
+          required: true
+        },
+        quantity: {
+          type: Number,
+          default: 1,
+          required: true
+        }
       }
-    ],
-    familyId: {
-      type: Schema.Types.ObjectId,
-      ref: 'FamilyAccount',
-      required: true
-    }
+    ]   
   },
   { timestamps: true }
 );

@@ -16,6 +16,12 @@ const FamilyAccountSchema = new Schema(
         type: Schema.Types.ObjectId,
         ref: 'User'
       }
+    ],
+    lists: [
+      {
+        type: Schema.Types.ObjectId,
+        ref: 'ShoppingList'
+      }
     ]
   },
   { timestamps: true }
