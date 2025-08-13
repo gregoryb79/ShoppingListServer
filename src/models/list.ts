@@ -28,4 +28,4 @@ const ShoppingListSchema = new Schema(
   { timestamps: true }
 );
 
-export const ShoppingList = model('ShoppingList', ShoppingListSchema);
+export const ShoppingList = model('ShoppingList', ShoppingListSchema, 'lists');

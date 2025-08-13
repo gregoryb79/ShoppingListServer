@@ -3,6 +3,9 @@ import { User } from '../models/user';
 import jwt from "jsonwebtoken";
 import { createHash } from "crypto";
 import { auth } from '../middleware/auth';
+import { FamilyAccount } from '../models/familyAccount';
+import { randomBytes } from "crypto";
+import { Request } from "express";
 export const router = express.Router();
 
 function createToken(userId: string, email: string, expiration: string ) {
@@ -62,4 +65,38 @@ router.put("/:name", async (req, res) => {
     } catch (error) {
         res.status(500).json({ message: "Internal server error" });
     }
+});
+
+router.put("/FA/:name",auth(), async (req, res) => {
+    console.log("creating default family account");    
+    const { name } = req.params; 
+    const auth = (req as Request & { auth?: { sub?: string } }).auth;
+    const userId = auth?.sub;
+    if (!name) {
+        res.status(400).json({ message: "Name is required" });
+        return;
+    }
+    if (name !== "DefaultAccount"){
+        res.status(400).json({ message: "You can only create DefaultAccount" });
+        return;
+    }
+
+    try{
+        const newFamilyAccount = await FamilyAccount.create({
+            name: "DefaultAccount",  
+            token: randomBytes(12).toString("base64").replace(/[^a-zA-Z0-9]/g, '').slice(0, 16),
+            users: [userId],
+        });
+        if (!newFamilyAccount) {
+            console.error("Error creating family account");
+            res.status(400).json({ message: "Error creating default family account" });
+            return;
+        }
+        console.log("Default family account created successfully", newFamilyAccount);
+        res.status(200).json({ familyAccount: newFamilyAccount });
+        return;
+    } catch (error) {
+        res.status(500).json({ message: "Internal server error" });
+    }     
+ 
 });

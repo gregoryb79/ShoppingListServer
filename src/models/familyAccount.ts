@@ -27,4 +27,4 @@ const FamilyAccountSchema = new Schema(
   { timestamps: true }
 );
 
-export const FamilyAccount = model('FamilyAccount', FamilyAccountSchema);
+export const FamilyAccount = model('FamilyAccount', FamilyAccountSchema, 'familyAccounts');
