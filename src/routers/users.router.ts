@@ -67,7 +67,7 @@ router.put("/:name", async (req, res) => {
     }
 });
 
-router.put("/FA/:name",auth(), async (req, res) => {
+router.post("/FA/:name",auth(), async (req, res) => {
     console.log("creating default family account");    
     const { name } = req.params; 
     const auth = (req as Request & { auth?: { sub?: string } }).auth;

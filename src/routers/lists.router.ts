@@ -5,7 +5,7 @@ import { ShoppingList } from '../models/list';
 import { auth } from '../middleware/auth';
 export const router = express.Router();
 
-router.put("/", auth(), async (req, res) => {
+router.post("/", auth(), async (req, res) => {
     const { name, items } = req.body;
 
     if (!name || !Array.isArray(items)) {
