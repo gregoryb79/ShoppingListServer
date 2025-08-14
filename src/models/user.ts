@@ -15,7 +15,13 @@ const UserSchema = new Schema(
         },
         avatar: {
             type: String
-        }
+        },
+        privateLists: [
+            {
+                type: Schema.Types.ObjectId,
+                ref: 'ShoppingList'
+            }
+        ]
     },
     { timestamps: true }
 );
