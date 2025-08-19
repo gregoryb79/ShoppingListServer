@@ -16,9 +16,9 @@ const UserSchema = new Schema(
         avatar: {
             type: String
         },
-        privateLists: [
+        lists: [
             {
-                type: Schema.Types.ObjectId,
+                type: String,
                 ref: 'ShoppingList'
             }
         ]

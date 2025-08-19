@@ -2,6 +2,7 @@ import { Schema, model } from "mongoose";
 
 const ShoppingListSchema = new Schema(
   {
+    _id: { type: String, required: true },
     name: {
       type: String,
       required: true
@@ -9,9 +10,9 @@ const ShoppingListSchema = new Schema(
     items: [
       {
         item: {
-          type: Schema.Types.ObjectId,
-          ref: 'Item',
-          required: true
+          _id: { type: String, required: true },
+          name: { type: String, required: true },
+          price: { type: Number }
         },
         quantity: {
           type: Number,
@@ -21,9 +22,9 @@ const ShoppingListSchema = new Schema(
         bought: {
           type: Boolean,
           default: false
-        }        
+        }
       }
-    ]   
+    ]
   },
   { timestamps: true }
 );
