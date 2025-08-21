@@ -32,7 +32,7 @@ router.get("/:userID", auth(), async (req, res) => {
         return;
     }
     try {
-        const user = await User.findById(userId);
+        const user = await User.findById(userId).populate('lists').select('-__v');
         if (!user) {
             res.status(404).json({ message: "User not found" });
             return;
@@ -99,7 +99,7 @@ router.put("/", auth(), async (req, res) => {
         }));
     }
     user.lists = user.lists.map((list: any) => list._id);
-    console.log("Updating user with:", user);
+    console.log("Updating user with:", user.name, user._id, user.lists.length);
     const updatedUser = await User.findByIdAndUpdate(user._id, user, { new: true });
 
     if (!updatedUser) {
@@ -109,7 +109,7 @@ router.put("/", auth(), async (req, res) => {
     }
 
     console.log("User updated successfully", updatedUser.name);
-    res.status(200);    
+    res.sendStatus(200);    
 });
 
 // router.post("/FA/:name",auth(), async (req, res) => {
