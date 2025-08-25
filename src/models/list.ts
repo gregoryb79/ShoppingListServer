@@ -22,9 +22,17 @@ const ShoppingListSchema = new Schema(
         bought: {
           type: Boolean,
           default: false
+        },
+        isDeleted: {
+          type: Boolean,
+          default: false
         }
       }
-    ]
+    ],
+    isDeleted: {
+      type: Boolean,
+      default: false
+    }
   },
   { timestamps: true }
 );
