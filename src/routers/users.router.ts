@@ -95,41 +95,28 @@ router.post("/login", async (req, res) => {
     }
 });
 
-router.post("/:name", async (req, res) => {
+router.post("/", async (req, res) => {
     console.log("creating default user");
-    const { name } = req.params; 
-    if (!name) {
-        res.status(400).json({ message: "Name is required" });
+    const newUser = req.body;
+    console.log("newUser", newUser);
+    if (!newUser) {
+        res.status(400).json({ message: "New user data is required" });
         return;
     }
-    if (name !== "DefaultUser"){
+    if (newUser.name !== "DefaultUser"){
         res.status(400).json({ message: "You can only create DefaultUser" });
         return;
     }
 
-    const newUser = await User.create({
-        name: "DefaultUser",  
-        email: new Date().toISOString()+"@example.com"
-    });
-    if (!newUser) {
+    const createdUser = await User.create(newUser);
+    if (!createdUser) {
         console.error("Error creating user");
         res.status(400).json({ message: "Error creating default user" });
         return;
     }
-    const token = createToken(newUser._id.toString(), newUser.email ?? "", "100y");
-
-    try {
-        const user = await User.findById(newUser._id).select('-__v');
-        if (!user) {
-            console.error("Error creating user");
-            res.status(404).json({ message: "error creating user" });
-            return;
-        }
-        console.log("Default user created successfully",user);
-        res.status(200).json({user,token});
-    } catch (error) {
-        res.status(500).json({ message: "Internal server error" });
-    }
+    const token = createToken(createdUser._id.toString(), createdUser.email ?? "", "100y");
+    res.status(200).json({user: createdUser, token});
+    
 });
 
 router.put("/", auth(), async (req, res) => {    
