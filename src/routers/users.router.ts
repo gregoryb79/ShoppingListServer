@@ -25,17 +25,18 @@ function hashPasswordWithSalt(password: string, salt: string) {
 }
 
 router.get("/:userID", auth(), async (req, res) => {
-    const auth = (req as Request & { auth?: { sub?: string } }).auth;
-    const tokenUserId = auth?.sub;
+    // const auth = (req as Request & { auth?: { sub?: string } }).auth;
+    // const tokenUserId = auth?.sub;
     const userId = req.params.userID;
-    if (tokenUserId !== userId) {
-        console.log("Unauthorized access attempt to user data, tokenUserId != userId");
-        res.status(403).json({ message: "Forbidden" });
-        return;
-    }
+    // if (tokenUserId !== userId) {
+    //     console.log("Unauthorized access attempt to user data, tokenUserId != userId");
+    //     res.status(403).json({ message: "Forbidden" });
+    //     return;
+    // }
     try {
         const user = await User.findById(userId).populate('lists').select('-__v');
         if (!user) {
+            console.log("User not found");
             res.status(404).json({ message: "User not found" });
             return;
         }
