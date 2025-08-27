@@ -4,6 +4,7 @@ import dotenv from "dotenv";
 import { createServer } from "http";
 import mongoose from "mongoose";
 import { app } from "./app";
+import { deleteIdleDefaultUsers } from "./dbhandling";
 
 dotenv.config({ path: "../.env" });
 const server = createServer(app);
@@ -15,6 +16,8 @@ async function init() {
         dbName: process.env.DB_NAME,
     });
     console.log("Connected to MongoDB!");
+
+    await deleteIdleDefaultUsers();
 
     server.listen(port, () => console.log(`Server listening on port ${port}`));
 }
